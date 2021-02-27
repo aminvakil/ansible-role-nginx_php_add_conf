@@ -1,7 +1,7 @@
 Role Name
 =========
 
-Template
+nginx_php_add_conf
 
 Requirements
 ------------
@@ -22,7 +22,7 @@ Example Playbook
     - hosts: servers
       become: true
       roles:
-         - role: aminvakil.template
+         - role: aminvakil.httpd_php_add_conf
 
 License
 -------

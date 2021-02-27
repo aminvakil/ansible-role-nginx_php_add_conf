@@ -2,4 +2,4 @@
 - name: Converge
   hosts: all
   roles:
-    - role: aminvakil.template
+    - role: aminvakil.nginx_php_add_conf
