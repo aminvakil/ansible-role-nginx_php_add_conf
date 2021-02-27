@@ -1,1 +1,82 @@
 ---
+- block:
+    - name: Install aminvakil.nginx_initial role from ansible-galaxy
+      command: ansible-galaxy install aminvakil.nginx_initial
+      register: result
+      changed_when: '"already installed" not in result.stderr'
+      become: false
+      delegate_to: localhost
+
+    - name: Install nginx
+      include_role:
+        name: aminvakil.nginx_initial
+  when: nginx_initial | bool
+
+- name: Check if nginx is installed or not
+  command: ls /etc/nginx
+  register: result
+  changed_when: false
+  ignore_errors: true
+
+- name: Fail when nginx has not been installed
+  assert:
+    that:
+      - result.rc == 0
+      - '"No such" not in result.stdout'
+    fail_msg: Nginx has not been installed, use aminvakil.nginx_initial to install nginx first.
+
+- name: Fail when both http and https are false or true.
+  assert:
+    that:
+      - (http | bool) or (https | bool)
+      - not ((http | bool) and (https | bool))
+    fail_msg: You should either enable http or https.
+
+- name: Install aminvakil.create_user role from ansible-galaxy
+  command: ansible-galaxy install aminvakil.create_user
+  register: result
+  changed_when: '"already installed" not in result.stderr'
+  become: false
+  delegate_to: localhost
+
+- name: Include create user role
+  include_role:
+    name: aminvakil.create_user
+    allow_duplicates: no
+
+- name: Include http only configuration
+  include_tasks: http.yml
+  when: http | bool
+
+- name: Include https only configuration
+  include_tasks: https.yml
+  when: https | bool
+
+- block:
+    - name: Install aminvakil.php_initial role from ansible-galaxy
+      command: ansible-galaxy install aminvakil.php_initial
+      register: result
+      changed_when: '"already installed" not in result.stderr'
+      become: false
+      delegate_to: localhost
+
+    - name: Install php
+      include_role:
+        name: aminvakil.php_initial
+  when: php_initial | bool
+
+- name: Check if php is installed or not
+  command: ls /etc/php
+  register: result
+  changed_when: false
+  ignore_errors: true
+
+- name: Fail when php has not been installed
+  assert:
+    that:
+      - result.rc == 0
+      - '"No such" not in result.stdout'
+
+- name: Include php configuration
+  include_tasks: php.yml
+  when: php | bool
