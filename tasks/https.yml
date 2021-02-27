@@ -1,0 +1,13 @@
+---
+- name: Create Nginx conf (http redirect to https) for website
+  template:
+    src: templates/etc/nginx/sites-available/https.conf.j2
+    dest: /etc/nginx/sites-available/{{ user_name }}.conf
+    mode: '0640'
+  notify: restart nginx
+
+- name: Create symlink for Nginx conf (https)
+  file:
+    src: /etc/nginx/sites-available/{{ user_name }}.conf
+    dest: /etc/nginx/sites-enabled/{{ user_name }}.conf
+    state: link
