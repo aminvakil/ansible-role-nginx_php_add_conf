@@ -41,7 +41,31 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        distro: [debian10]
+        include:
+          - distro: debian10
+            nginx_initial: true
+            php_initial: true
+            http: true
+            https: false
+            php: false
+          - distro: debian10
+            nginx_initial: true
+            php_initial: true
+            http: false
+            https: true
+            php: false
+          - distro: debian10
+            nginx_initial: true
+            php_initial: true
+            http: true
+            https: false
+            php: true
+          - distro: debian10
+            nginx_initial: true
+            php_initial: true
+            http: false
+            https: true
+            php: true
 
     steps:
       - name: Check out the codebase.
@@ -63,3 +87,8 @@ jobs:
           PY_COLORS: '1'
           ANSIBLE_FORCE_COLOR: '1'
           MOLECULE_DISTRO: ${{ matrix.distro }}
+          NGINX_INITIAL: ${{ matrix.nginx_initial }}
+          PHP_INITIAL: ${{ matrix.php_initial }}
+          HTTP: ${{ matrix.http }}
+          HTTPS: ${{ matrix.https }}
+          PHP: ${{ matrix.php }}

@@ -1,5 +1,12 @@
 ---
 - name: Converge
   hosts: all
+  vars:
+    nginx_initial: "{{ lookup('env', 'NGINX_INITIAL') }}"
+    php_initial: "{{ lookup('env', 'PHP_INITIAL') }}"
+    http: "{{ lookup('env', 'HTTP') }}"
+    https: "{{ lookup('env', 'HTTPS') }}"
+    staging: "{{ lookup('env', 'STAGING') }}"
+    php: "{{ lookup('env', 'PHP') }}"
   roles:
     - role: aminvakil.nginx_php_add_conf
