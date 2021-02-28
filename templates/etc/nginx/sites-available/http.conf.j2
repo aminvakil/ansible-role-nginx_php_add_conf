@@ -3,7 +3,7 @@ server {
 
        server_name {{ domain_name }} {{ domain_alias }};
 
-       root /srv/{{ user_name }};
+       root /srv/{{ user_name }}/public_html;
        index index.php index.html;
 
         location ~ \.php$ {
