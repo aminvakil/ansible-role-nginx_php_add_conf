@@ -11,3 +11,4 @@
     src: /etc/nginx/sites-available/{{ user_name }}.conf
     dest: /etc/nginx/sites-enabled/{{ user_name }}.conf
     state: link
+  notify: restart nginx
