@@ -9,6 +9,5 @@ server {
         location ~ \.php$ {
                include snippets/fastcgi-php.conf;
                fastcgi_pass unix:/run/php/{{ user_name }}.sock;
-	       fastcgi_index index.php;
         }
 }
