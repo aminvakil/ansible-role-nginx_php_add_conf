@@ -41,7 +41,7 @@
   notify: restart nginx
 
 - name: Edit certbot hook
-  file:
+  template:
     src: templates/etc/letsencrypt/cli.ini
     dest: /etc/letsencrypt/cli.ini
     mode: '0640'
