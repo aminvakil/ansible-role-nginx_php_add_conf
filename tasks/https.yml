@@ -18,6 +18,7 @@
 
 - name: Get certficate from letsencrypt
   command: /usr/bin/certbot certonly --webroot -w /srv/{{ user_name }}/public_html -m {{ sysadmin_email }} --agree-tos -d {{ domain_name }} -d {{ domain_alias }} -n
+  tags: molecule-notest
 
 - name: Create Nginx conf (http redirect to https) for website
   template:
@@ -25,6 +26,7 @@
     dest: /etc/nginx/sites-available/{{ user_name }}.conf
     mode: '0640'
   notify: restart nginx
+  tags: molecule-notest
 
 - name: Create symlink for Nginx conf (https)
   file:
