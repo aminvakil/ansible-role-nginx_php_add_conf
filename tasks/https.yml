@@ -1,4 +1,24 @@
 ---
+- name: Install certbot and python-certbot-nginx
+  apt:
+    name: "{{ item }}"
+    state: present
+    install_recommends: no
+  loop:
+    - certbot
+    - python-certbot-nginx
+
+- name: Add http configuration to retrieve letsencrypt certificate
+  include_tasks: http.yml
+
+- name: Reload nginx
+  systemd:
+    name: nginx
+    state: reloaded
+
+- name: Get certficate from letsencrypt
+  command: /usr/bin/certbot certonly --webroot -w /srv/{{ user_name }}/public_html -m {{ sysadmin_email }} --agree-tos -d {{ domain_name }} -d {{ domain_alias }} -n
+
 - name: Create Nginx conf (http redirect to https) for website
   template:
     src: templates/etc/nginx/sites-available/https.conf.j2
@@ -11,4 +31,11 @@
     src: /etc/nginx/sites-available/{{ user_name }}.conf
     dest: /etc/nginx/sites-enabled/{{ user_name }}.conf
     state: link
+  notify: restart nginx
+
+- name: Add ssl specific configurations
+  template:
+    src: templates/etc/nginx/snippets/ssl.conf
+    dest: /etc/nginx/snippets/ssl.conf
+    mode: '0640'
   notify: restart nginx

@@ -1,0 +1,25 @@
+server {
+        listen 80;
+
+        server_name {{ domain_name }} {{ domain_alias }};
+
+        return 301 https://$host$request_uri;
+}
+
+server {
+	listen 443 ssl http2;
+	server_name {{ domain_name }} {{ domain_alias }};
+
+	ssl_certificate /etc/letsencrypt/live/{{ domain_name }}/fullchain.pem;
+	ssl_certificate_key /etc/letsencrypt/live/{{ domain_name }}/privkey.pem;
+	ssl_trusted_certificate /etc/letsencrypt/live/{{ domain_name }}/chain.pem;
+	include snippets/ssl.conf;
+
+        root /srv/{{ user_name }}/public_html;
+        index index.php index.html;
+
+         location ~ \.php$ {
+                include snippets/fastcgi-php.conf;
+                fastcgi_pass unix:/run/php/{{ user_name }}.sock;
+         }
+}
