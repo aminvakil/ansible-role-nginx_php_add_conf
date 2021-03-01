@@ -19,7 +19,7 @@
 
 - name: Get certficate from letsencrypt
   command:
-    cmd: /usr/bin/certbot certonly --webroot -w /srv/{{ user_name }}/public_html -m {{ sysadmin_email }} --agree-tos -d {{ domain_name }} -d {{ domain_alias }} -n
+    cmd: /usr/bin/certbot certonly {{ staging | ternary('--staging', '') }} --webroot -w /srv/{{ user_name }}/public_html -m {{ sysadmin_email }} --agree-tos -d {{ domain_name }} -d {{ domain_alias }} -n
     creates: /etc/letsencrypt/live/{{ domain_name }}/fullchain.pem
   tags: molecule-notest
 
