@@ -22,7 +22,7 @@ Example Playbook
     - hosts: servers
       become: true
       roles:
-         - role: aminvakil.httpd_php_add_conf
+         - role: aminvakil.nginx_php_add_conf
 
 License
 -------
