@@ -6,6 +6,7 @@
     php_initial: "{{ lookup('env', 'PHP_INITIAL') }}"
     http: "{{ lookup('env', 'HTTP') }}"
     https: "{{ lookup('env', 'HTTPS') }}"
+    cloudflare: "{{ lookup('env', 'CLOUDFLARE') }}"
     staging: "{{ lookup('env', 'STAGING') }}"
     php: "{{ lookup('env', 'PHP') }}"
   roles:
