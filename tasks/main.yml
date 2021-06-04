@@ -1,15 +1,7 @@
 ---
-- block:
-    - name: Install aminvakil.nginx_initial role from ansible-galaxy
-      command: ansible-galaxy install aminvakil.nginx_initial
-      register: result
-      changed_when: '"already installed" not in result.stderr'
-      become: false
-      delegate_to: localhost
-
-    - name: Install nginx
-      include_role:
-        name: aminvakil.nginx_initial
+- name: Install nginx
+  include_role:
+    name: aminvakil.lamp.nginx_initial
   when: nginx_initial | bool
 
 - name: Check if nginx is installed or not
@@ -23,7 +15,7 @@
     that:
       - result.rc == 0
       - '"No such" not in result.stdout'
-    fail_msg: Nginx has not been installed, use aminvakil.nginx_initial to install nginx first.
+    fail_msg: Nginx has not been installed, use aminvakil.lamp to install nginx first.
 
 - name: Fail when both http and https are false or true.
   assert:
@@ -32,16 +24,9 @@
       - not ((http | bool) and (https | bool))
     fail_msg: You should either enable http or https.
 
-- name: Install aminvakil.create_user role from ansible-galaxy
-  command: ansible-galaxy install aminvakil.create_user
-  register: result
-  changed_when: '"already installed" not in result.stderr'
-  become: false
-  delegate_to: localhost
-
 - name: Include create user role
   include_role:
-    name: aminvakil.create_user
+    name: aminvakil.lamp.create_user
     allow_duplicates: no
 
 - name: Include http only configuration
@@ -52,17 +37,9 @@
   include_tasks: https.yml
   when: https | bool
 
-- block:
-    - name: Install aminvakil.php_initial role from ansible-galaxy
-      command: ansible-galaxy install aminvakil.php_initial
-      register: result
-      changed_when: '"already installed" not in result.stderr'
-      become: false
-      delegate_to: localhost
-
-    - name: Install php
-      include_role:
-        name: aminvakil.php_initial
+- name: Install php
+  include_role:
+    name: aminvakil.lamp.php_initial
   when: php_initial | bool
 
 - name: Check if php is installed or not
