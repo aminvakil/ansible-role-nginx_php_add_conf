@@ -3,7 +3,7 @@
   apt:
     name: "{{ item }}"
     state: present
-    install_recommends: no
+    install_recommends: false
   loop:
     - certbot
     - python-certbot-nginx

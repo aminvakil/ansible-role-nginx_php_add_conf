@@ -27,7 +27,7 @@
 - name: Include create user role
   include_role:
     name: aminvakil.lamp.create_user
-    allow_duplicates: no
+    allow_duplicates: false
 
 - name: Include http only configuration
   include_tasks: http.yml
