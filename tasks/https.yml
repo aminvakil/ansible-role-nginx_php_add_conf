@@ -26,22 +26,15 @@
 - name: Create Nginx conf (http redirect to https) for website
   template:
     src: templates/etc/nginx/sites-available/https.conf.j2
-    dest: /etc/nginx/sites-available/{{ user_name }}.conf
+    dest: /etc/nginx/conf.d/{{ user_name }}.conf
     mode: '0640'
   notify: restart nginx
   tags: molecule-notest
 
-- name: Create symlink for Nginx conf (https)
-  file:
-    src: /etc/nginx/sites-available/{{ user_name }}.conf
-    dest: /etc/nginx/sites-enabled/{{ user_name }}.conf
-    state: link
-  notify: restart nginx
-
 - name: Add ssl specific configurations
   template:
     src: templates/etc/nginx/snippets/ssl.conf
-    dest: /etc/nginx/snippets/ssl.conf
+    dest: /etc/nginx/conf.d/ssl.conf
     mode: '0640'
   notify: restart nginx
 

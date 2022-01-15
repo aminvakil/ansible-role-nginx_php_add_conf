@@ -13,7 +13,6 @@ server {
 	ssl_certificate /etc/letsencrypt/live/{{ domain_name }}/fullchain.pem;
 	ssl_certificate_key /etc/letsencrypt/live/{{ domain_name }}/privkey.pem;
 	ssl_trusted_certificate /etc/letsencrypt/live/{{ domain_name }}/chain.pem;
-	include snippets/ssl.conf;
 
         root /srv/{{ user_name }}/public_html;
         index index.php index.html;
