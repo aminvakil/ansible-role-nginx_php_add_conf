@@ -31,13 +31,6 @@
   notify: restart nginx
   tags: molecule-notest
 
-- name: Add ssl specific configurations
-  template:
-    src: templates/etc/nginx/snippets/ssl.conf
-    dest: /etc/nginx/conf.d/ssl.conf
-    mode: '0640'
-  notify: restart nginx
-
 - name: Edit certbot hook
   template:
     src: templates/etc/letsencrypt/cli.ini
