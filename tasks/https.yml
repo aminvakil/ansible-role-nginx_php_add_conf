@@ -1,12 +1,12 @@
 ---
-- name: Install certbot and python-certbot-nginx
+- name: Install certbot and python3-certbot-nginx
   apt:
     name: "{{ item }}"
     state: present
     install_recommends: false
   loop:
     - certbot
-    - python-certbot-nginx
+    - python3-certbot-nginx
 
 - name: Add http configuration to retrieve letsencrypt certificate
   include_tasks: http.yml
