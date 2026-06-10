@@ -42,48 +42,6 @@ jobs:
     strategy:
       matrix:
         include:
-          - distro: debian11
-            nginx_initial: true
-            php_initial: true
-            http: true
-            https: false
-            cloudflare: false
-            php: false
-          - distro: debian11
-            nginx_initial: true
-            php_initial: true
-            http: false
-            https: true
-            cloudflare: false
-            php: false
-          - distro: debian11
-            nginx_initial: true
-            php_initial: true
-            http: false
-            https: true
-            cloudflare: true
-            php: false
-          - distro: debian11
-            nginx_initial: true
-            php_initial: true
-            http: true
-            https: false
-            cloudflare: false
-            php: true
-          - distro: debian11
-            nginx_initial: true
-            php_initial: true
-            http: false
-            https: true
-            cloudflare: false
-            php: true
-          - distro: debian11
-            nginx_initial: true
-            php_initial: true
-            http: false
-            https: true
-            cloudflare: true
-            php: true
           - distro: debian13
             nginx_initial: true
             php_initial: true
